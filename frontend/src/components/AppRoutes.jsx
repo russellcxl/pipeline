@@ -17,6 +17,7 @@ export default function Routes(props) {
     <Suspense fallback={<Spinner />}>
       <Router>
         <Switch>
+
           <Route path="/login">
             <Login handleLogin={props.handleLogin} />
           </Route>
@@ -37,9 +38,8 @@ export default function Routes(props) {
             )}
           </Route>
 
-
           <Route path="/dashboard">
-            <Dashboard />
+            <Dashboard {...props}/>
           </Route>
           
         </Switch>

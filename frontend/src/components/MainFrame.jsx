@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import clsx from "clsx";
-import MainContent from "./body/MainContainer";
+import ContentContainer from "./body/ContentContainer";
 import { mainListItems, secondaryListItems } from "./navigation/ListItems";
 import {
   AppBar,
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    background: "#292b2c",
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -92,11 +93,11 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    maxWidth: '1500px'
   },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
-    alignItems: "center",
     overflow: "auto",
     flexDirection: "column",
   },
@@ -157,6 +158,7 @@ export default function MainFrame(props) {
         </Toolbar>
       </AppBar>
 
+      {/*  side drawer */}
       <Drawer
         variant="permanent"
         classes={{
@@ -175,10 +177,9 @@ export default function MainFrame(props) {
         <List>{secondaryListItems}</List>
       </Drawer>
 
-
       {/* main body */}
 
-      <MainContent classes={classes} {...props} />
+      <ContentContainer classes={classes} {...props} />
 
     </div>
   );

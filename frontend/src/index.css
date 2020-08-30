@@ -1,13 +1,81 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* overlapping arrows for dashboard */
+
+.overlapping-arrows {
+  padding: 30px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.overlapping-arrows .col-md-4 {
+  display: block;
+  float: left;
+  height: 7rem;
+  background: #ffc107;
+  text-align: center;
+  position: relative;
+  margin: 0 25px 0 0;
+  font-size: 20px;
+  text-decoration: none;
+	color: #fff;
+	max-width: 30%;
+}
+
+.overlapping-arrows .col-md-4 h5 {
+  margin-top: 50px;
+  margin-left: 80px;
+  font-size: 1.5rem;
+  color: #343a40;
+}
+
+.overlapping-arrows .col-md-4:after {
+  content: "";
+  border-top: 70px solid transparent;
+  border-bottom: 70px solid transparent;
+  border-left: 80px solid #ffc107;
+  position: absolute;
+  right: -80px;
+  top: 0;
+  height: 7rem;
+}
+
+.overlapping-arrows .col-md-4:before {
+  content: "";
+  border-top: 70px solid transparent;
+  border-bottom: 70px solid transparent;
+  border-left: 80px solid #f3f2f2;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 7rem;
+}
+
+.overlapping-arrows .col-md-4:first-child {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.overlapping-arrows .col-md-4:first-child:before {
+	display: none;
+}
+
+/* document cards in dashboard */
+
+.document-card-container {
+	padding-left: 2rem;
+	margin-left: 4rem !important;
+}
+
+.document-card-container .col-md-4 {
+	max-width: 30%;
+	margin-right: 2.2rem;
+	padding-left: 1rem;
+}
+
+.document-card {
+  height: 7rem;
+  width: 15rem;
+  transition: 0.3s ease-in-out;
+}
+
+.document-card:hover {
+  height: 10rem !important;
+  transition: 0.3s ease-in-out;
 }

@@ -6,22 +6,22 @@ import {
   Paper,
   Box
 } from "@material-ui/core";
+import { Copyright } from '@material-ui/icons';
 
-export default function MainContent(props) {
+// ------------------------------------ component ------------------------------------ //
+
+export default function ContentContainer(props) {
 
   return (
     <main className={props.classes.content}>
       <div className={props.classes.appBarSpacer} />
       <Container maxWidth="lg" className={props.classes.container}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={props.classes.paper} >
-              <AppRoutes {...props}/>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Box pt={4}></Box>
+
+          {/* router for rendering the main body content */}
+          <AppRoutes {...props} />
+
       </Container>
     </main>
   );
 };
+

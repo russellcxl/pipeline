@@ -8,21 +8,21 @@ import PeopleIcon from "@material-ui/icons/People";
 import FaceIcon from "@material-ui/icons/Face";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
 import LibraryIcon from "@material-ui/icons/LibraryBooks";
-import { Link, BrowserRouter as Router } from "react-router-dom";
+import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Dashboard from "../body/Dashboard";
 
 
 export const mainListItems = (
   <div>
-    <Router>
       {/* Clicking this does not make the page re-render */}
-      <Link to="/dashboard">
+      <a href="/dashboard">
         <ListItem button>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
-      </Link>
+      </a>
 
       <ListItem button>
         <ListItemIcon>
@@ -36,7 +36,6 @@ export const mainListItems = (
         </ListItemIcon>
         <ListItemText primary="Directory" />
       </ListItem>
-    </Router>
   </div>
 );
 
