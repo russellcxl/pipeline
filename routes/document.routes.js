@@ -13,7 +13,7 @@ router.post("/:userid", async (req, res) => {
     let user = await User.findById(req.params.userid);
     let document = new Document(req.body);
     document.createdBy = user._id;
-    document.accessibleBy.push(user._id);
+    document.accessibleBy.push(user._id); //could do this by validating on frontend too
     user.documents.push(document._id);
     await user.save();
     await document.save();
@@ -30,7 +30,7 @@ router.post("/:userid", async (req, res) => {
   }
 });
 
-// ------------------------------------ index ------------------------------------ //
+// ------------------------------------ index (show all) ------------------------------------ //
 
 router.get("/", async (req, res) => {
   try {
@@ -62,7 +62,7 @@ router.get("/show/:id", async (req, res) => {
 
 // ------------------------------------ edit ------------------------------------ //
 
-router.get("/edit/:id", async (req, res) => {
+router.post("/edit/:id", async (req, res) => {
   try {
     let document = await Document.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json({

@@ -22,9 +22,9 @@ router.get("/", async (req, res) => {
 
 // ------------------------------------ show ------------------------------------ //
 
-router.get("/:id", async (req, res) => {
+router.get("/profile", checkToken, async (req, res) => {
   try {
-    let user = await User.findById(req.params.id).populate("documents");
+    let user = await User.findById(req.user.id, "-password").populate("documents");
     res.status(200).json({
       user,
     });

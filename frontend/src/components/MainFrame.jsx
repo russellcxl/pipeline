@@ -1,30 +1,45 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import dotenv from "dotenv";
 import clsx from "clsx";
-import ContentContainer from "./body/ContentContainer";
-import { mainListItems, secondaryListItems } from "./navigation/ListItems";
+import AppRoutes from "./AppRoutes";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
   IconButton,
+  Container,
   Typography,
-  makeStyles,
   Badge,
   Drawer,
   Divider,
   List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@material-ui/core";
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import {
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
   ChevronLeft,
+  AddCircle as AddIcon,
+  Dashboard as DashboardIcon,
+  People as PeopleIcon,
+  Face as FaceIcon,
+  ExitToApp as LogoutIcon,
+  LibraryBooks as LibraryIcon
 } from "@material-ui/icons";
+import logo from '../images/logo.png';
+import logoPure from '../images/logo-pure.png';
 
 
 // ------------------------------------ config ------------------------------------ //
 
+dotenv.config();
+let url = process.env.REACT_APP_URL;
 
 const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -35,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     padding: "0 8px",
     ...theme.mixins.toolbar,
   },
@@ -106,7 +121,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 // ------------------------------------ component ------------------------------------ //
 
 
@@ -114,6 +128,8 @@ export default function MainFrame(props) {
 
   const classes = useStyles();
   const [open, setOpen] = useState(true);
+  const documents = useDocument();
+  const users = useUsers();
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -123,9 +139,68 @@ export default function MainFrame(props) {
     setOpen(false);
   }
 
+  const listTop = (
+    <div>
+      <Link to="/">
+        <ListItem button>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+      </Link>
   
+      <Link to="/library">
+        <ListItem button>
+          <ListItemIcon>
+            <LibraryIcon />
+          </ListItemIcon>
+          <ListItemText primary="Library" />
+        </ListItem>
+      </Link>
+  
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Directory" />
+      </ListItem>
+    </div>
+  );
+  
+  const listLoggedIn = (
+    <div>
+      <ListItem button>
+        <ListItemIcon>
+          <FaceIcon />
+        </ListItemIcon>
+        <ListItemText primary="My profile" />
+      </ListItem>
+      <ListItem button onClick={props.handleLogout}>
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText primary="Logout" />
+      </ListItem>
+    </div>
+  );
+  
+  const listNotLoggedIn = (
+    <div>
+      <Link to="/login">
+        <ListItem button>
+          <ListItemIcon>
+            <FaceIcon />
+          </ListItemIcon>
+          <ListItemText primary="Login" />
+        </ListItem>
+      </Link>
+    </div>
+  );
+
   return (
     <div className={classes.root}>
+      {/* top navbar */}
       <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
@@ -167,20 +242,71 @@ export default function MainFrame(props) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          {open && <img src={logo} style={{height: '9rem'}} onClick={handleDrawerClose}></img>}
+          
+          {/* <IconButton onClick={handleDrawerClose}>
             <ChevronLeft />
-          </IconButton>
+          </IconButton> */}
         </div>
+        <Divider/>
+        <List>
+          <Link to="/documents/new">
+            <ListItem button>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="New document" />
+            </ListItem>
+          </Link>
+        </List>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{listTop}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>{props.isAuth ? listLoggedIn : listNotLoggedIn}</List>
       </Drawer>
 
       {/* main body */}
-
-      <ContentContainer classes={classes} {...props} />
-
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          {/* router for rendering the main body content */}
+          <AppRoutes {...props} documents={documents} users={users}/>
+        </Container>
+      </main>
     </div>
   );
+}
+
+// ------------------------------------ get all documents ------------------------------------ //
+
+function useDocument() {
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${url}/api/documents`)
+      .then((res) => {
+        setDocuments(res.data.documents);
+      })
+      .catch((e) => console.log(e));
+  }, [url]);
+
+  return documents;
+}
+
+// ------------------------------------ get all users ------------------------------------ //
+
+function useUsers() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${url}/api/users`)
+      .then((res) => {
+        setUsers(res.data.users);
+      })
+      .catch((e) => console.log(e));
+  }, [url]);
+
+  return users;
 }

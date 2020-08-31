@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import dotenv from "dotenv";
-import clsx from "clsx";
-import {
-  Container,
-  Grid, 
-  Paper,
-  Box
-} from "@material-ui/core";
 import { Row, Col, Card, ListGroup,ListGroupItem } from 'react-bootstrap';
 
 // ------------------------------------ config ------------------------------------ //
@@ -20,7 +13,6 @@ let url = process.env.REACT_APP_URL;
 export default function Dashboard(props) {
 
   const [documents, setDocuments] = useState([]);
-  const fixedHeightPaper = clsx(props.classes.paper, props.classes.fixedHeight);
   
   useEffect(() => {
     axios
@@ -81,7 +73,7 @@ export default function Dashboard(props) {
             if (d.stage === "review") {
               return (
                 <Row key={i} className="mb-3">
-                  <Card style={{ width: "15rem" }} className="text-center">
+                  <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title>{d.title}</Card.Title>
                       <Card.Text>{d.text}</Card.Text>
@@ -102,7 +94,7 @@ export default function Dashboard(props) {
             if (d.stage === "approved") {
               return (
                 <Row key={i} className="mb-3">
-                  <Card style={{ width: "15rem" }} className="text-center">
+                  <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title>{d.title}</Card.Title>
                       <Card.Text>{d.text}</Card.Text>

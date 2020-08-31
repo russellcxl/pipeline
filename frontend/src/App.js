@@ -3,11 +3,32 @@ import axios from "axios";
 import dotenv from "dotenv";
 import { decode } from "jsonwebtoken";
 import MainFrame from "./components/MainFrame";
+import { BrowserRouter as Router } from "react-router-dom";
+import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
+import { Alert } from "react-bootstrap";
 
 // ------------------------------------ config ------------------------------------ //
 
 dotenv.config();
 let url = process.env.REACT_APP_URL;
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#ffc107',
+      dark: '#343a40',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#ffc107',
+      dark: '#343a40',
+      contrastText: '#000',
+    },
+  },
+});
+
 
 // ------------------------------------ component ------------------------------------ //
 
@@ -17,7 +38,11 @@ function App() {
 
   return (
     <div className="App">
-      <MainFrame {...handleAuth}/>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <MainFrame {...handleAuth} />
+        </Router>
+      </ThemeProvider>
     </div>
   );
 }
@@ -47,7 +72,7 @@ function useHandleAuth() {
       let res = await axios.post(`${url}/api/auth/login`, details);
       localStorage.setItem("token", res.data.token);
       setAuth(true);
-      console.log(res.data);
+
     }
     catch (e) {
       console.log(e);
@@ -63,6 +88,21 @@ function useHandleAuth() {
     setUser(null);
     localStorage.removeItem("token");
   }
+
+  async function getUserDetails(token) {
+    try {
+      let token = localStorage.getItem("token");
+      let res = await axios.get(`${url}/api/users/profile`, {
+        headers: {
+          "x-auth-token": token
+        }
+      });
+      setUser(res.data.user);
+      setAuth(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   
   useEffect(() => {
@@ -71,9 +111,8 @@ function useHandleAuth() {
     if (!(token == null)) {
       let decodedToken = decode(token);
   
-      !decodedToken ? localStorage.removeItem("token") : setAuth(true);
+      !decodedToken ? localStorage.removeItem("token") : getUserDetails(token);
     }
-    console.log(isAuth);
   }, [isAuth]);
 
   return {
@@ -82,7 +121,7 @@ function useHandleAuth() {
     handleRegister,
     handleLogin,
     handleLogout,
-  }
+  };
 }
 
 export default App;

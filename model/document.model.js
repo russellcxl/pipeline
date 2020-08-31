@@ -9,7 +9,10 @@ const DocumentSchema = new mongoose.Schema(
 
     text: String,
 
-    deadline: Date,
+    deadline: {
+      type: Date,
+      default: "2049-01-01T18:25:43.511Z",
+    },
 
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -82,6 +85,28 @@ const DocumentSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// ------------------------------------ hooks ------------------------------------ //
+
+DocumentSchema.plugin(populateAllFields);
+
+function populateAllFields(schema) {
+  let paths = "";
+  schema.eachPath(function process(pathname, schemaType) {
+      if (pathname == "_id") return;
+      if (schemaType.options.ref) paths += " " + pathname;
+  });
+
+  schema.pre("find", handler);
+  schema.pre("findOne", handler);
+
+  function handler(next) {
+      this.populate(paths);
+      next();
+  }
+};
+
+// ------------------------------------ exports ------------------------------------ //
 
 module.exports = mongoose.model("Document", DocumentSchema);
 

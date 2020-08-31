@@ -1,7 +1,9 @@
-/* overlapping arrows for dashboard */
 
+
+/* overlapping arrows for dashboard */
 .overlapping-arrows {
-  padding: 30px;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
 }
 
 .overlapping-arrows .col-md-4 {
@@ -60,7 +62,7 @@
 
 .document-card-container {
 	padding-left: 2rem;
-	margin-left: 4rem !important;
+	margin-left: 3.7rem !important;
 }
 
 .document-card-container .col-md-4 {
@@ -70,7 +72,7 @@
 }
 
 .document-card {
-  height: 7rem;
+  height: 6rem;
   width: 15rem;
   transition: 0.3s ease-in-out;
 }
@@ -78,4 +80,31 @@
 .document-card:hover {
   height: 10rem !important;
   transition: 0.3s ease-in-out;
+}
+
+/* login */
+.MuiButton-containedPrimary {
+  background: #ffc107 !important;
+  color: #343a40 !important;
+  font-weight: 700 !important;
+}
+
+/* misc */
+button:focus {
+  outline: none !important;
+}
+
+.MuiInput-underline:after {
+  border-bottom: 2px solid #ffc107 !important;
+}
+
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: 1px solid black !important;
+}
+
+a {
+  color: #343a40 !important;
+}
+a:hover {
+  text-decoration: none !important;
 }
