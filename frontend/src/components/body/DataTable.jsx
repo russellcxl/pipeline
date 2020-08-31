@@ -11,7 +11,6 @@ export default function DataTable(props) {
 
   let modifiedData = [...props.documents];
 
-
   useEffect(() => {
 
     if (modifiedData.length > 0) {
@@ -25,6 +24,8 @@ export default function DataTable(props) {
         obj.createdAt = moment(d.createdAt).format("DD MMM YYYY");
         if (d.deadline) obj.deadline = moment(d.deadline).format("DD MMM YYYY");
         if (d.text.length > 50) obj.text = d.text.slice(0, 50) + " ...";
+        if (d.requiredInputs) obj.requiredInputs = d.requiredInputs.map(x => x.user.name).join(", ");
+        if (d.requiredApprovals) obj.requiredApprovals = d.requiredApprovals.map(x => x.Approver.name).join(", ");
 
         tempArr.push(obj)
       });

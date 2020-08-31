@@ -1,4 +1,6 @@
-
+h1 {
+  font-family: 'Fugaz One', cursive;
+}
 
 /* overlapping arrows for dashboard */
 .overlapping-arrows {
@@ -58,7 +60,7 @@
 	display: none;
 }
 
-/* document cards in dashboard */
+/* dashboard */
 
 .document-card-container {
 	padding-left: 2rem;
@@ -72,14 +74,19 @@
 }
 
 .document-card {
-  height: 6rem;
+  height: 6.7rem;
   width: 15rem;
   transition: 0.3s ease-in-out;
+  overflow: hidden;
 }
 
 .document-card:hover {
   height: 10rem !important;
   transition: 0.3s ease-in-out;
+}
+
+h5 {
+  font-family: 'Fugaz One', cursive;
 }
 
 /* login */
@@ -100,6 +107,10 @@ button:focus {
 
 .MuiInput-underline:hover:not(.Mui-disabled):before {
   border-bottom: 1px solid black !important;
+}
+
+.MuiTypography-h6 {
+  font-family: 'Fugaz One', cursive !important;
 }
 
 a {

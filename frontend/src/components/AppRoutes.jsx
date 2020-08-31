@@ -36,9 +36,9 @@ export default function Routes(props) {
             <NewDoc users={props.users}/>
           </Route>
 
-          {/* <PrivateRoute path="/user" isAuth={props.isAuth}>
-            <UserProfile />
-          </PrivateRoute> */}
+          <Route path="/user/profile">
+            <NewDoc users={props.users}/>
+          </Route>
 
           <Route path="/user/:id">
             {props.isAuth ? (

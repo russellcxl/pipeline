@@ -42,15 +42,15 @@ export default function NewDoc(props) {
   
   return (
     <div>
-      <h1>Create New Document</h1>
+      <h1 className="text-center">New Document</h1>
       <Form>
         <Form.Group controlId="exampleForm.ControlInput1">
-          <Form.Label>Title</Form.Label>
-          <Form.Control name="title" type="text" placeholder="Title" {...title} />
+          <Form.Label>Document Title</Form.Label>
+          <Form.Control name="title" type="text" {...title} />
         </Form.Group>
 
         <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Text</Form.Label>
+          <Form.Label>Document Content</Form.Label>
           <Form.Control name="text" as="textarea" rows="3" />
         </Form.Group>
 
@@ -80,7 +80,7 @@ export default function NewDoc(props) {
 
           <Form.Group as={Col}>
             <Form.Label>Require approval from:</Form.Label>
-            <Form.Control name="requiredApprovals" as="select" multiple onChange={testChange} value={test}>
+            <Form.Control name="test[]" as="select" multiple onChange={testChange} value={test}>
               {props.users.map((user, i) => (
                 <option key={i} value={user._id}>{user.name}</option>
               ))}
@@ -89,7 +89,7 @@ export default function NewDoc(props) {
 
         </Form.Row>
       </Form>
-      <Button onClick={() => handleSubmit(title)}>Create document</Button>
+      <Button onClick={() => handleSubmit(title)} className="text-right">Create document</Button>
     </div>
   );
 }

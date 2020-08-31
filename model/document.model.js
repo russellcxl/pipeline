@@ -49,8 +49,15 @@ const DocumentSchema = new mongoose.Schema(
 
     requiredInputs: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        isDone: {
+          type: Number,
+          enum: [0, 1], // 0 for pending approval
+          default: 0,
+        },
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
       },
     ],
 

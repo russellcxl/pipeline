@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import dotenv from "dotenv";
-import { Row, Col, Card, ListGroup,ListGroupItem } from 'react-bootstrap';
+import { Row, Col, Card, ListGroup,ListGroupItem, Badge } from 'react-bootstrap';
+import {
+  CheckCircle as TickIcon,
+  Cancel as XIcon,
+} from "@material-ui/icons";
 
 // ------------------------------------ config ------------------------------------ //
 
@@ -13,13 +17,14 @@ let url = process.env.REACT_APP_URL;
 export default function Dashboard(props) {
 
   const [documents, setDocuments] = useState([]);
-  
+  let doneCount = 0;
+  let notDoneCount = 0;
+
   useEffect(() => {
     axios
       .get(`${url}/api/documents`)
       .then((res) => {
         setDocuments(res.data.documents);
-        console.log(res.data.documents);
       })
       .catch((e) => console.log(e));
   }, []); 
@@ -27,9 +32,16 @@ export default function Dashboard(props) {
   function countDocuments(stage) {
     return documents.filter(d => d.stage === stage).length
   }
+  
+  function countDone(doc) {
+    doc.requiredInputs.forEach((x) => {
+      x.isDone == 0 ? doneCount++ : notDoneCount++;
+    });
+  }
 
   return (
     <div>
+
       {/* Pipeline arrows */}
       <Row className="overlapping-arrows justify-content-center">
         <Col md={4} style={{ zIndex: 3 }}>
@@ -49,16 +61,28 @@ export default function Dashboard(props) {
         {/* in progress */}
         <Col md={4}>
           {documents.map((d, i) => {
+
+            // only list documents that are statused in-prog
             if (d.stage === "in-progress") {
               return (
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
+
                     <Card.Body>
                       <Card.Title>{d.title}</Card.Title>
                       <Card.Text>{d.text.slice(0, 20)}...</Card.Text>
+                      {d.requiredInputs.map(x => (
+                        <Card.Text>{x.user.name}</Card.Text>
+                      ))}
                     </Card.Body>
+
                     <ListGroup className="list-group-flush">
-                      <ListGroupItem>Input: {d.requiredInputs}</ListGroupItem>
+                      <ListGroupItem>
+                        <Badge variant="warning" className="mr-2">5 days left </Badge>
+                        <Badge variant="warning" style={{background: 'white'}}>
+                          <TickIcon /> <XIcon/>
+                        </Badge>
+                      </ListGroupItem>
                     </ListGroup>
                   </Card>
                 </Row>

@@ -34,7 +34,21 @@ router.post("/:userid", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    let documents = await Document.find();
+    let documents = await Document.find()
+      .populate({
+        path : "requiredInputs",
+        populate: {
+          path: "user",
+          model: "User"
+        }
+      })
+      .populate({
+        path : "requiredApprovals",
+        populate: {
+          path: "Approver",
+          model: "User"
+        }
+      });
     res.status(200).json({
       documents,
     });
@@ -49,7 +63,22 @@ router.get("/", async (req, res) => {
 
 router.get("/show/:id", async (req, res) => {
   try {
-    let document = await Document.findById(req.params.id);
+    // deep populating approvers
+    let document = await Document.findById(req.params.id)
+      .populate({
+        path: "requiredInputs",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      })
+      .populate({
+        path: "requiredApprovals",
+        populate: {
+          path: "Approver",
+          model: "User",
+        },
+      });
     res.status(200).json({
       document,
     });
@@ -71,7 +100,7 @@ router.post("/edit/:id", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Failed to retrieve DOCUMENT",
+      message: "Failed to edit DOCUMENT",
     });
   }
 });

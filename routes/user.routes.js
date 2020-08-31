@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 
 router.get("/", async (req, res) => {
   try {
-    let users = await User.find().populate("documents");
+    let users = await User.find();
     res.status(200).json({
       users,
     });
