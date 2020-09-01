@@ -18,18 +18,16 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
-  ChevronLeft,
   AddCircle as AddIcon,
   Dashboard as DashboardIcon,
   People as PeopleIcon,
   Face as FaceIcon,
   ExitToApp as LogoutIcon,
   LibraryBooks as LibraryIcon,
-  Rotate90DegreesCcw
 } from "@material-ui/icons";
 import logo from '../images/logo.png';
 import logoPure from '../images/logo-pure.png';
@@ -151,7 +149,7 @@ export default function MainFrame(props) {
           <ListItemText primary="Dashboard" />
         </ListItem>
       </Link>
-  
+
       <Link to="/library">
         <ListItem button>
           <ListItemIcon>
@@ -160,13 +158,15 @@ export default function MainFrame(props) {
           <ListItemText primary="Library" />
         </ListItem>
       </Link>
-  
-      <ListItem button>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Directory" />
-      </ListItem>
+
+      <Link to="/directory">
+        <ListItem button>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Directory" />
+        </ListItem>
+      </Link>
     </div>
   );
   
@@ -252,6 +252,7 @@ export default function MainFrame(props) {
               src={logo}
               style={{ height: "9rem" }}
               onClick={handleDrawerClose}
+              alt=""
             ></img>
           )}
         </div>
@@ -296,7 +297,7 @@ function useDocument() {
         setDocuments(res.data.documents);
       })
       .catch((e) => console.log(e));
-  }, [url]);
+  }, []);
 
   return documents;
 }
@@ -313,7 +314,7 @@ function useUsers() {
         setUsers(res.data.users);
       })
       .catch((e) => console.log(e));
-  }, [url]);
+  }, []);
 
   return users;
 }

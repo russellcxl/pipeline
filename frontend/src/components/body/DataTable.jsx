@@ -19,8 +19,8 @@ export default function DataTable(props) {
         let obj = {...d};
 
         obj.createdBy = d.createdBy.name || "null";
-        obj.createdAt = moment(d.createdAt).format("DD MMM YYYY");
-        if (d.deadline) obj.deadline = moment(d.deadline).format("DD MMM YYYY");
+        obj.createdAt = moment(d.createdAt).format("DD-MM-YYYY");
+        if (d.deadline) obj.deadline = moment(d.deadline).format("DD-MM-YYYY");
         if (d.requiredInputs) obj.requiredInputs = d.requiredInputs.map(x => x.user.name).join(", ");
         if (d.requiredApprovals) obj.requiredApprovals = d.requiredApprovals.map(x => x.user.name).join(", ");
 

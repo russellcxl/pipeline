@@ -81,7 +81,7 @@ h1 {
 }
 
 .document-card:hover {
-  height: 15rem !important;
+  height: 13rem !important;
   transition: 0.3s ease-in-out;
 }
 

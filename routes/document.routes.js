@@ -93,7 +93,21 @@ router.get("/show/:id", async (req, res) => {
 
 router.post("/edit/:id", async (req, res) => {
   try {
-    let document = await Document.findByIdAndUpdate(req.params.id, req.body);
+    let { title, deadline, stage, accessibleBy, requiredInputs, requiredApprovals } = req.body;
+    let checkInputs = requiredInputs.filter(x => x.isDone == 0);
+    let checkApprovals = requiredApprovals.filter(x => x.isDone == 0);
+    if (checkInputs.length == 0) stage = "review";
+    if (checkApprovals.length == 0) stage = "approved";
+    
+    let document = await Document.findByIdAndUpdate(req.params.id, {
+      title, 
+      deadline,
+      stage,
+      accessibleBy,
+      requiredInputs,
+      requiredApprovals,
+    });
+
     res.status(200).json({
       message: "DOCUMENT successfully updated",
       document,
@@ -101,29 +115,6 @@ router.post("/edit/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Failed to edit DOCUMENT",
-    });
-  }
-});
-
-// ------------------------------------ show to authorised users ------------------------------------ //
-
-router.get("/showauthorised/:id/:userid", async (req, res) => {
-  try {
-    // if doc.accessibleBy includes user.id => return doc
-    let document = await Document.findById(req.params.id);
-    if (document.accessibleBy.includes(req.params.userid)) {
-      return res.status(200).json({
-        document,
-      });
-    }
-
-    res.status(200).json({
-      message: "You are not authorised to view this DOCUMENT",
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to retrieve DOCUMENT",
     });
   }
 });

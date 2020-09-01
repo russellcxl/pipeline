@@ -74,7 +74,7 @@ export default function Dashboard(props) {
               return (
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
-                  <Card.Body>
+                    <Card.Body>
                       <Card.Title>{d.title}</Card.Title>
                         {d.requiredApprovals.map((x) => (
                           isDone(x.user.name, x.isApproved)
@@ -99,7 +99,9 @@ export default function Dashboard(props) {
                   <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title>{d.title}</Card.Title>
-                      <Card.Text>{d.text}</Card.Text>
+                      {d.requiredApprovals.map((x) =>
+                        isDone(x.user.name, x.isApproved)
+                      )}
                     </Card.Body>
                     <ListGroup className="list-group-flush">
                       <ListGroupItem>{getDaysLeft(d)}</ListGroupItem>
@@ -157,7 +159,7 @@ function isDone(name, status) {
   return (
     <div>
       <Card.Text>
-        {name}: {status ? <TickIcon /> : <NullIcon color="action" />}
+        {name}: {status ? <TickIcon style={{color: "#28a745"}}/> : <NullIcon color="action" />}
       </Card.Text>
     </div>
   );
