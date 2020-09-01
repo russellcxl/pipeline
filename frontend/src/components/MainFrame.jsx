@@ -28,7 +28,8 @@ import {
   People as PeopleIcon,
   Face as FaceIcon,
   ExitToApp as LogoutIcon,
-  LibraryBooks as LibraryIcon
+  LibraryBooks as LibraryIcon,
+  Rotate90DegreesCcw
 } from "@material-ui/icons";
 import logo from '../images/logo.png';
 import logoPure from '../images/logo-pure.png';
@@ -40,6 +41,7 @@ dotenv.config();
 let url = process.env.REACT_APP_URL;
 
 const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -170,12 +172,15 @@ export default function MainFrame(props) {
   
   const listLoggedIn = (
     <div>
-      <ListItem button>
-        <ListItemIcon>
-          <FaceIcon />
-        </ListItemIcon>
-        <ListItemText primary="My profile" />
-      </ListItem>
+      <Link to="/users/:id">
+        <ListItem button>
+          <ListItemIcon>
+            <FaceIcon />
+          </ListItemIcon>
+          <ListItemText primary="My profile" />
+        </ListItem>
+      </Link>
+
       <ListItem button onClick={props.handleLogout}>
         <ListItemIcon>
           <LogoutIcon />
@@ -242,13 +247,15 @@ export default function MainFrame(props) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          {open && <img src={logo} style={{height: '9rem'}} onClick={handleDrawerClose}></img>}
-          
-          {/* <IconButton onClick={handleDrawerClose}>
-            <ChevronLeft />
-          </IconButton> */}
+          {open && (
+            <img
+              src={logo}
+              style={{ height: "9rem" }}
+              onClick={handleDrawerClose}
+            ></img>
+          )}
         </div>
-        <Divider/>
+        <Divider />
         <List>
           <Link to="/documents/new">
             <ListItem button>
@@ -270,7 +277,7 @@ export default function MainFrame(props) {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           {/* router for rendering the main body content */}
-          <AppRoutes {...props} documents={documents} users={users}/>
+          <AppRoutes {...props} documents={documents} users={users} />
         </Container>
       </main>
     </div>

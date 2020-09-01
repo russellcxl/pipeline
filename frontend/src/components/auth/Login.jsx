@@ -48,7 +48,7 @@ export default function Login(props) {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LockOutlinedIcon style={{color: "#343a40"}}/>
         </Avatar>
         <form className={classes.form} noValidate>
           <TextField
@@ -58,7 +58,6 @@ export default function Login(props) {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField

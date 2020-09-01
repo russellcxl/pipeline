@@ -9,23 +9,22 @@ export default function DataTable(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [arr, setArr] = useState([]);
 
-  let modifiedData = [...props.documents];
-
   useEffect(() => {
 
-    if (modifiedData.length > 0) {
+    if (props.documents.length > 0) {
 
       let tempArr = [];
 
-      modifiedData.forEach((d) => {
+      props.documents.forEach((d) => {
         let obj = {...d};
 
         obj.createdBy = d.createdBy.name || "null";
         obj.createdAt = moment(d.createdAt).format("DD MMM YYYY");
         if (d.deadline) obj.deadline = moment(d.deadline).format("DD MMM YYYY");
-        if (d.text.length > 50) obj.text = d.text.slice(0, 50) + " ...";
-        if (d.requiredInputs) obj.requiredInputs = d.requiredInputs.map(x => x.user.name).join(", ");
-        if (d.requiredApprovals) obj.requiredApprovals = d.requiredApprovals.map(x => x.Approver.name).join(", ");
+        if (d.requiredInputs) {
+          obj.requiredInputs = d.requiredInputs.map(x => x.user.name).join(", ");
+        }
+        if (d.requiredApprovals) obj.requiredApprovals = d.requiredApprovals.map(x => x.Approver).join(", ");
 
         tempArr.push(obj)
       });
@@ -34,6 +33,7 @@ export default function DataTable(props) {
     }
 
   }, [props.documents])
+
 
   return (
     <div style={{ maxWidth: "100%" }}>

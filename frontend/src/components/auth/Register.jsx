@@ -7,11 +7,12 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import RegisterIcon from "@material-ui/icons/EmojiPeople";
 
 // ------------------------------------ config ------------------------------------ //
 
@@ -50,7 +51,7 @@ export default function Login(props) {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <AccountCircleIcon />
+          <RegisterIcon style={{color: "#343a40"}}/>
         </Avatar>
         <form className={classes.form} noValidate>
           <TextField
@@ -60,7 +61,6 @@ export default function Login(props) {
             label="Name"
             name="name"
             autoComplete="name"
-            autoFocus
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
@@ -70,7 +70,6 @@ export default function Login(props) {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
