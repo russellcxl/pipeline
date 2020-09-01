@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import dotenv from "dotenv";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import { Row, Col, Card, ListGroup,ListGroupItem, Badge } from 'react-bootstrap';
 import {
   CheckCircleOutline as TickIcon,
@@ -47,12 +48,12 @@ export default function Dashboard(props) {
                   <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title style={{ fontSize: "1rem" }}>
-                        {d.title}
+                        <Link to={`/documents/edit/${d._id}`}>{d.title}</Link>
                       </Card.Title>
                       {d.requiredInputs.map((x) =>
                         isDone(x.user.name, x.isDone)
                       )}
-                      <Card.Text className="mt-3" style={{ fontSize: "15px"}}>
+                      <Card.Text className="mt-3" style={{ fontSize: "15px" }}>
                         {d.text.slice(0, 150)}..
                       </Card.Text>
                     </Card.Body>
@@ -74,7 +75,7 @@ export default function Dashboard(props) {
                   <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title style={{ fontSize: "1rem" }}>
-                        {d.title}
+                        <Link to={`/documents/edit/${d._id}`}>{d.title}</Link>
                       </Card.Title>
                       {d.requiredApprovals.map((x) =>
                         isDone(x.user.name, x.isApproved)
@@ -98,7 +99,7 @@ export default function Dashboard(props) {
                   <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title style={{ fontSize: "1rem" }}>
-                        {d.title}
+                        <Link to={`/documents/edit/${d._id}`}>{d.title}</Link>
                       </Card.Title>
                       {d.requiredApprovals.map((x) =>
                         isDone(x.user.name, x.isApproved)
@@ -140,13 +141,13 @@ function useGetDocuments() {
   return documents;
 }
 
-// ------------------------------------ count documents in particular stage ------------------------------------ //
+// ------------------------------------ count documents in stage ------------------------------------ //
 
 function countDocuments(stage, docs) {
   return docs.filter(d => d.stage === stage).length
 }
 
-// ------------------------------------ get days left badges ------------------------------------ //
+// ------------------------------------ days left badges ------------------------------------ //
 
 function getDaysLeft(document) {
   let daysLeft = moment().diff(document.deadline, 'days') * (-1);
@@ -165,7 +166,7 @@ function getDaysLeft(document) {
   );
 }
 
-// ------------------------------------ isDone ------------------------------------ //
+// ------------------------------------ icons for who has done the task ------------------------------------ //
 
 function isDone(name, status) {
   return (

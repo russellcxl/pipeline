@@ -3,7 +3,9 @@ import { Form, Button, Col } from "react-bootstrap";
 import Axios from "axios";
 import dotenv from "dotenv";
 import { useForm } from "react-hook-form";
-import { Redirect } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Spinner from '../../Spinner';
+import moment from "moment";
 
 
 // ------------------------------------ config  ------------------------------------ //
@@ -18,23 +20,43 @@ let url = process.env.REACT_APP_URL;
 // users props for all users, user for me
 export default function EditDoc(props) {
   
-  const { register, handleSubmit } = useForm();
+  
+  let { id } = useParams();
+  let preloadedData = {...props.documents.filter(doc => doc._id === id)[0]};
+  preloadedData.deadline = moment(preloadedData.deadline).format("YYYY-MM-DD");
+  preloadedData.requiredInputs = preloadedData.requiredInputs.map(x => x.user._id);
+  preloadedData.requiredApprovals = preloadedData.requiredApprovals.map(x => x.user._id);
+
+  const [isLoading, setLoading] = useState(true);
+  const { register, handleSubmit } = useForm({
+    defaultValues: preloadedData
+  });
+
 
   const onSubmit = (data) => {
     data.requiredInputs = data.requiredInputs.map(x => ({user: x}));
     data.requiredApprovals = data.requiredApprovals.map(x => ({user: x}));
-    console.log(data);
-    Axios.post(`${url}/api/documents/${props.user._id}`, data)
-      .then(res => {
-        console.log(res.data.message);
-      })
-      .catch(err => alert(err.data.message));
+    console.log(data)
+    // Axios.post(`${url}/api/documents/edit/${id}`, data)
+    //   .then(res => {
+    //     console.log(res.data.message);
+    //   })
+    //   .catch(err => alert(err.data.message));
   }
 
-  
+  useEffect(() => {
+    if (props.documents.length > 0) {
+      setLoading(false);
+    }
+    
+  }, [props])
+
   return (
     <div>
-      <h1 className="text-center">New Document</h1>
+      {isLoading ? <Spinner />
+      :
+      <React.Fragment>
+      <h1 className="text-center">Edit Document</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {/* TITLE, CONTENT, DEADLINE */}
 
@@ -121,6 +143,8 @@ export default function EditDoc(props) {
           Create document
         </Button>
       </Form>
+      </React.Fragment>
+    }
     </div>
   );
 }

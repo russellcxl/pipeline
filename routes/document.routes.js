@@ -13,7 +13,7 @@ router.post("/:userid", async (req, res) => {
     let user = await User.findById(req.params.userid);
     let document = new Document(req.body);
     document.createdBy = user._id;
-    document.accessibleBy.push(user._id); //could do this by validating on frontend too
+    document.accessibleBy.push(user._id);
     user.documents.push(document._id);
     await user.save();
     await document.save();

@@ -37,7 +37,7 @@ function App() {
   const handleAuth = useHandleAuth();
 
   return (
-    <div className="App">
+    <div className="App" >
       <ThemeProvider theme={theme}>
         <Router>
           <MainFrame {...handleAuth} />

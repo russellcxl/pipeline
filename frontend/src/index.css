@@ -132,3 +132,8 @@ a {
 a:hover {
   text-decoration: none !important;
 }
+
+select:-internal-list-box:enabled option:checked:enabled:hover {
+  background-color: #ffc107 !important;
+  color: rgb(16, 16, 16) !important;
+}

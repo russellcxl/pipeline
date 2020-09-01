@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    maxWidth: '1500px'
+    maxWidth: '1500px',
   },
   paper: {
     padding: theme.spacing(2),
@@ -204,7 +204,7 @@ export default function MainFrame(props) {
   );
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       {/* top navbar */}
       <AppBar
         position="absolute"
@@ -276,7 +276,7 @@ export default function MainFrame(props) {
       {/* main body */}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="lg" className={classes.container} >
           {/* router for rendering the main body content */}
           <AppRoutes {...props} documents={documents} users={users} />
         </Container>

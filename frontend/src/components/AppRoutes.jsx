@@ -13,69 +13,68 @@ import DataTable from "./body/DataTable";
 import NewDoc from "./body/documents/NewDoc";
 import ViewDoc from "./body/documents/ViewDoc";
 import Directory from "./body/Directory";
+import EditDoc from './body/documents/EditDoc';
 
 export default function Routes(props) {
   return (
     <Suspense fallback={<Spinner />}>
-        <Switch>
+      <Switch>
+        {/* SIDE NAVBAR */}
 
+        <Route path="/" exact>
+          <Dashboard {...props} />
+        </Route>
 
-          {/* SIDE NAVBAR */}
+        <Route path="/library">
+          <DataTable documents={props.documents} />
+        </Route>
 
-          <Route path="/" exact>
-            <Dashboard {...props} />
-          </Route>
+        <Route path="/directory">
+          <Directory />
+        </Route>
 
-          <Route path="/library">
-            <DataTable documents={props.documents} />
-          </Route>
+        {/* DOCUMENTS */}
 
-          <Route path="/directory">
-            <Directory />
-          </Route>
+        <Route path="/documents/new">
+          <NewDoc {...props} />
+        </Route>
 
+        <Route path="/documents/view/:id">
+          <ViewDoc {...props} />
+        </Route>
 
-          {/* DOCUMENTS */}
+        <Route path="/documents/edit/:id">
+          {props.documents.length > 0 ? (<EditDoc {...props} />) : (<Spinner/>)}
+        </Route>
 
-          <Route path="/documents/new">
-            <NewDoc {...props} />
-          </Route>
-          
-          <Route path="/documents/view/:id">
-            <ViewDoc {...props} />
-          </Route>
+        {/* AUTH */}
 
+        <Route path="/login">
+          {props.isAuth ? (
+            <Redirect to="/" />
+          ) : (
+            <Login handleLogin={props.handleLogin} />
+          )}
+        </Route>
 
-          {/* AUTH */}
+        <Route path="/register">
+          <Register handleRegister={props.handleRegister} />
+        </Route>
 
-          <Route path="/login">
-            {props.isAuth ? 
-              <Redirect to="/" /> 
-              :
-              <Login handleLogin={props.handleLogin} />
-            }
-          </Route>
+        <Route path="/users/:id">
+          {props.isAuth ? (
+            <UserProfile user={props.user} />
+          ) : (
+            <Login handleLogin={props.handleLogin} />
+          )}
+        </Route>
 
-          <Route path="/register">
-            <Register handleRegister={props.handleRegister} />
-          </Route>
+        {/* TEST PAGES */}
 
-          <Route path="/users/:id">
-            {props.isAuth ? (
-              <UserProfile user={props.user}/>
-            ) : (
-              <Login handleLogin={props.handleLogin} />
-            )}
-          </Route>
-
-
-          {/* TEST PAGES */}
-
-          <Route path="/spinner">
-            <Spinner />
-          </Route>
-
-        </Switch>
+        <Route path="/spinner">
+          <Spinner />
+        </Route>
+      </Switch>
     </Suspense>
   );
 }
