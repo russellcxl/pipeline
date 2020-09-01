@@ -22,7 +22,6 @@ export default function Dashboard(props) {
 
   return (
     <div>
-
       {/* Pipeline arrows */}
       <Row className="overlapping-arrows justify-content-center">
         <Col md={4} style={{ zIndex: 3 }}>
@@ -38,28 +37,27 @@ export default function Dashboard(props) {
 
       {/* Document list */}
       <Row className="document-card-container">
-
         {/* in progress */}
         <Col md={4}>
           {documents.map((d, i) => {
-
             // only list documents that are statused in-prog
             if (d.stage === "in-progress") {
               return (
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title>{d.title}</Card.Title>
-                        {d.requiredInputs.map((x) => (
-                          isDone(x.user.name, x.isDone)
-                        ))}
+                      <Card.Title style={{ fontSize: "1rem" }}>
+                        {d.title}
+                      </Card.Title>
+                      {d.requiredInputs.map((x) =>
+                        isDone(x.user.name, x.isDone)
+                      )}
+                      <Card.Text className="mt-3" style={{ fontSize: "15px"}}>
+                        {d.text.slice(0, 150)}..
+                      </Card.Text>
                     </Card.Body>
 
-                    <ListGroup className="list-group-flush">
-                      <ListGroupItem>
-                        {getDaysLeft(d)}
-                      </ListGroupItem>
-                    </ListGroup>
+                    {getDaysLeft(d)}
                   </Card>
                 </Row>
               );
@@ -75,14 +73,14 @@ export default function Dashboard(props) {
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title>{d.title}</Card.Title>
-                        {d.requiredApprovals.map((x) => (
-                          isDone(x.user.name, x.isApproved)
-                        ))}
+                      <Card.Title style={{ fontSize: "1rem" }}>
+                        {d.title}
+                      </Card.Title>
+                      {d.requiredApprovals.map((x) =>
+                        isDone(x.user.name, x.isApproved)
+                      )}
                     </Card.Body>
-                    <ListGroup className="list-group-flush">
-                      <ListGroupItem>{getDaysLeft(d)}</ListGroupItem>
-                    </ListGroup>
+                    {getDaysLeft(d)}
                   </Card>
                 </Row>
               );
@@ -93,19 +91,27 @@ export default function Dashboard(props) {
         {/* approved */}
         <Col md={4}>
           {documents.map((d, i) => {
+            // only list documents that are statused in-prog
             if (d.stage === "approved") {
               return (
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title>{d.title}</Card.Title>
+                      <Card.Title style={{ fontSize: "1rem" }}>
+                        {d.title}
+                      </Card.Title>
                       {d.requiredApprovals.map((x) =>
                         isDone(x.user.name, x.isApproved)
                       )}
+                      <Card.Subtitle className="mt-3 mb-1">
+                        Preview:{" "}
+                      </Card.Subtitle>
+                      <Card.Text style={{ fontSize: "15px" }}>
+                        {d.text.slice(0, 50)}..
+                      </Card.Text>
                     </Card.Body>
-                    <ListGroup className="list-group-flush">
-                      <ListGroupItem>{getDaysLeft(d)}</ListGroupItem>
-                    </ListGroup>
+
+                    {getDaysLeft(d)}
                   </Card>
                 </Row>
               );
@@ -147,9 +153,15 @@ function getDaysLeft(document) {
   let variant;
   daysLeft <= 3 ? variant = "danger"
     : daysLeft <= 7 ? variant = "warning"
-    : variant = "muted";
+    : variant = "secondary";
   return (
-    <Badge variant={variant} className="mr-2">{daysLeft} day(s) left</Badge>
+    <ListGroup className="list-group-flush">
+      <ListGroupItem>
+        <Badge variant={variant} className="mr-2">
+          {daysLeft} day(s) left
+        </Badge>
+      </ListGroupItem>
+    </ListGroup>
   );
 }
 

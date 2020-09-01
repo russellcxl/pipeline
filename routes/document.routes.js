@@ -48,7 +48,9 @@ router.get("/", async (req, res) => {
           path: "user",
           model: "User"
         }
-      });
+      })
+      .sort({"deadline": 1});
+
     res.status(200).json({
       documents,
     });

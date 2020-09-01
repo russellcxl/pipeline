@@ -1,6 +1,6 @@
 import React from "react";
 import { css } from "@emotion/core";
-import ScaleLoader from "react-spinners/ScaleLoader";
+import {HashLoader} from "react-spinners";
 
 // Can be a string as well. Need to ensure each key-value pair ends with ;
 const override = css`
@@ -11,11 +11,11 @@ const override = css`
 
 export default function Spinner() {
   return (
-    <div className="sweet-loading">
-      <ScaleLoader
+    <div className="sweet-loading" style={{marginTop: '15%'}}>
+      <HashLoader
         css={override}
         size={200}
-        color={"#123abc"}
+        // color={"#ffc107"}
       />
     </div>
   );

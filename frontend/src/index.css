@@ -64,25 +64,38 @@ h1 {
 
 .document-card-container {
 	padding-left: 2rem;
-	margin-left: 3.7rem !important;
+	margin-left: 1.5rem !important;
 }
 
 .document-card-container .col-md-4 {
 	max-width: 30%;
-	margin-right: 4.2rem;
+	margin-right: 3.2rem;
 	padding-left: 1rem;
+}
+
+.document-card-container .col-md-4:last-child {
+	margin-right: 0;
 }
 
 .document-card {
   height: 6.4rem;
-  width: 15rem;
+  width: 18rem;
   transition: 0.3s ease-in-out;
   overflow: hidden;
 }
 
 .document-card:hover {
-  height: 13rem !important;
+  height: 15rem !important;
   transition: 0.3s ease-in-out;
+}
+
+.document-card .list-group {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.document-card:hover .list-group {
+  opacity: 0 !important;
 }
 
 h5 {
