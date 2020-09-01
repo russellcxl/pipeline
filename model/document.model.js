@@ -68,7 +68,7 @@ const DocumentSchema = new mongoose.Schema(
           enum: [0, 1], // 0 for pending approval
           default: 0,
         },
-        Approver: {
+        user: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "User",
         },

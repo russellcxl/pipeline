@@ -50,11 +50,9 @@ export default function Dashboard(props) {
                   <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title>{d.title}</Card.Title>
-                      <span>
                         {d.requiredInputs.map((x) => (
-                          <Card.Text>{x.user.name}</Card.Text>
+                          isDone(x.user.name, x.isDone)
                         ))}
-                      </span>
                     </Card.Body>
 
                     <ListGroup className="list-group-flush">
@@ -76,9 +74,11 @@ export default function Dashboard(props) {
               return (
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
-                    <Card.Body>
+                  <Card.Body>
                       <Card.Title>{d.title}</Card.Title>
-                      <Card.Text>{d.text}</Card.Text>
+                        {d.requiredApprovals.map((x) => (
+                          isDone(x.user.name, x.isApproved)
+                        ))}
                     </Card.Body>
                     <ListGroup className="list-group-flush">
                       <ListGroupItem>{getDaysLeft(d)}</ListGroupItem>
@@ -102,8 +102,7 @@ export default function Dashboard(props) {
                       <Card.Text>{d.text}</Card.Text>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
-                      <ListGroupItem>Input</ListGroupItem>
-                      <ListGroupItem>Reviewers</ListGroupItem>
+                      <ListGroupItem>{getDaysLeft(d)}</ListGroupItem>
                     </ListGroup>
                   </Card>
                 </Row>
@@ -147,21 +146,19 @@ function getDaysLeft(document) {
   daysLeft <= 3 ? variant = "danger"
     : daysLeft <= 7 ? variant = "warning"
     : variant = "muted";
-
-  console.log(daysLeft)
   return (
     <Badge variant={variant} className="mr-2">{daysLeft} day(s) left</Badge>
   );
 }
 
-// ------------------------------------ get isDone bagdes ------------------------------------ //
+// ------------------------------------ isDone ------------------------------------ //
 
-function getIsDone(document) {
+function isDone(name, status) {
   return (
-    <Badge variant="muted" style={{ background: "white" }}>
-      {document.requiredInputs.map(d => (
-        d.isDone ? (<TickIcon/> ) : (<NullIcon/> )
-      ))}
-    </Badge>
+    <div>
+      <Card.Text>
+        {name}: {status ? <TickIcon /> : <NullIcon color="action" />}
+      </Card.Text>
+    </div>
   );
 }

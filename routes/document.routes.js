@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
       .populate({
         path : "requiredApprovals",
         populate: {
-          path: "Approver",
+          path: "user",
           model: "User"
         }
       });
@@ -75,7 +75,7 @@ router.get("/show/:id", async (req, res) => {
       .populate({
         path: "requiredApprovals",
         populate: {
-          path: "Approver",
+          path: "user",
           model: "User",
         },
       });

@@ -74,14 +74,14 @@ h1 {
 }
 
 .document-card {
-  height: 6.7rem;
+  height: 6.4rem;
   width: 15rem;
   transition: 0.3s ease-in-out;
   overflow: hidden;
 }
 
 .document-card:hover {
-  height: 10rem !important;
+  height: 15rem !important;
   transition: 0.3s ease-in-out;
 }
 
