@@ -48,14 +48,9 @@ export default function Dashboard(props) {
                   <Card className="text-center document-card">
                     <Card.Body>
                       <Card.Title style={{ fontSize: "20px", marginBottom: '30px' }}>
-                        <Link to={`/documents/update/${d._id}`}>{d.title}</Link>
+                        <Link to={`/documents/input/${d._id}`}>{d.title}</Link>
                       </Card.Title>
-                      {d.requiredInputs.map((x) =>
-                        isDone(x.user.name, x.isDone)
-                      )}
-                      <Card.Text className="mt-3" style={{ fontSize: "15px" }}>
-                        {d.text.slice(0, 150)}..
-                      </Card.Text>
+                      {cardContent(d)}
                     </Card.Body>
 
                     {getDaysLeft(d)}
@@ -74,12 +69,12 @@ export default function Dashboard(props) {
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title style={{ fontSize: "20px", marginBottom: '30px' }}>
-                        <Link to={`/documents/update/${d._id}`}>{d.title}</Link>
+                      <Card.Title
+                        style={{ fontSize: "20px", marginBottom: "30px" }}
+                      >
+                        <Link to={`/documents/input/${d._id}`}>{d.title}</Link>
                       </Card.Title>
-                      {d.requiredApprovals.map((x) =>
-                        isDone(x.user.name, x.isApproved)
-                      )}
+                      {cardContent(d)}
                     </Card.Body>
                     {getDaysLeft(d)}
                   </Card>
@@ -98,20 +93,13 @@ export default function Dashboard(props) {
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title style={{ fontSize: "20px", marginBottom: '30px' }}>
+                      <Card.Title
+                        style={{ fontSize: "20px", marginBottom: "30px" }}
+                      >
                         <Link to={`/documents/update/${d._id}`}>{d.title}</Link>
                       </Card.Title>
-                      {d.requiredApprovals.map((x) =>
-                        isDone(x.user.name, x.isApproved)
-                      )}
-                      <Card.Subtitle className="mt-3 mb-1">
-                        Preview:{" "}
-                      </Card.Subtitle>
-                      <Card.Text style={{ fontSize: "15px" }}>
-                        {d.text.slice(0, 50)}..
-                      </Card.Text>
+                      {cardContent(d)}
                     </Card.Body>
-
                     {getDaysLeft(d)}
                   </Card>
                 </Row>
@@ -124,7 +112,9 @@ export default function Dashboard(props) {
   );
 };
 
+
 // ------------------------------------ get documents  ------------------------------------ //
+
 
 function useGetDocuments() {
   const [documents, setDocuments] = useState([]);
@@ -136,18 +126,22 @@ function useGetDocuments() {
         setDocuments(res.data.documents);
       })
       .catch((e) => console.log(e));
-  }, [url]); 
+  }, []); 
 
   return documents;
 }
 
+
 // ------------------------------------ count documents in stage ------------------------------------ //
+
 
 function countDocuments(stage, docs) {
   return docs.filter(d => d.stage === stage).length
 }
 
+
 // ------------------------------------ days left badges ------------------------------------ //
+
 
 function getDaysLeft(document) {
   let daysLeft = moment().diff(document.deadline, 'days') * (-1);
@@ -174,7 +168,27 @@ function getDaysLeft(document) {
   );
 }
 
-// ------------------------------------ icons for who has done the task ------------------------------------ //
+
+// ------------------------------------ card content ------------------------------------ //
+
+
+function cardContent(doc) {
+  return (
+    <div>
+      <Row className="mx-2">
+        <Col>
+          {doc.requiredInputs.map((x) => isDone(x.user.name, x.isDone))}
+        </Col>
+        <Col>
+          {doc.requiredApprovals.map((x) => isDone(x.user.name, x.isApproved))}
+        </Col>
+      </Row>
+      <Card.Text className="mt-3" style={{ fontSize: "15px" }}>
+        {doc.text.slice(0, 150)}..
+      </Card.Text>
+    </div>
+  );
+}
 
 function isDone(name, status) {
   return (
@@ -185,3 +199,8 @@ function isDone(name, status) {
     </div>
   );
 }
+
+
+                      
+
+

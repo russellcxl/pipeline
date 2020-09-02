@@ -4,7 +4,6 @@ import Axios from "axios";
 import { useForm } from "react-hook-form";
 import { useParams, Redirect } from "react-router-dom";
 import Spinner from '../../Spinner';
-import moment from "moment";
 
 // ------------------------------------ config ------------------------------------ //
 
@@ -15,7 +14,7 @@ const url = process.env.REACT_APP_URL;
 // ------------------------------------ component ------------------------------------ //
 
 
-export default function QuickEditDoc(props) {
+export default function ReviewDoc(props) {
 
   // get document id, document info, current user info
   let {id} = useParams();
@@ -32,9 +31,9 @@ export default function QuickEditDoc(props) {
   });
 
   const onSubmit = (data) => {
-    Axios.post(`${url}/api/documents/update/${id}/user/${user._id}`, data)
-      .then((res) => console.log(res.data.message))
-      .catch((e) => console.log(e));
+    // Axios.post(`${url}/api/documents/review/${id}/user/${user._id}`, data)
+    //   .then((res) => console.log(res.data.message))
+    //   .catch((e) => console.log(e));
   }
 
   useEffect(() => {
@@ -50,7 +49,7 @@ export default function QuickEditDoc(props) {
       : (
         <div>
           <h1 className="text-center mb-5">
-            Document: {document.title.toUpperCase()}
+            DOCUMENT: {document.title}
           </h1>
 
           <Row>

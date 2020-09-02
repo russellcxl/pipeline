@@ -121,29 +121,26 @@ router.post("/edit/:id", async (req, res) => {
 
 
 // for updating text, isDone, isApproved, history
-router.post("/update/:id/user/:userid", async (req, res) => {
+router.post("/input/:id/user/:userid", async (req, res) => {
   try {
     let userId = req.params.userid;
     let document = await Document.findById(req.params.id);
     let { text, history, isDone } = req.body;
+    let isComplete = true; //checks if all required inputs have been made
     document.text = text;
     document.history = history;
-
-    // // if all inputs have been made, move to review stage; likewise for reviews
-    // let checkInputs = requiredInputs.filter((x) => x.isDone == 1);
-    // let checkApprovals = requiredApprovals.filter((x) => x.isDone == 1);
-    // if (checkInputs.length == requiredInputs.length) stage = "review";
-    // if (
-    //   checkInputs.length == requiredInputs.length &&
-    //   checkApprovals.length == requiredApprovals.length
-    // )
-    //   stage = "approved";
 
     document.requiredInputs.forEach((input) => {
       if (input.user == userId) {
         input.isDone = isDone;
       }
     });
+
+    document.requiredInputs.forEach((input) => {
+      if (input.isDone == 0) isComplete = false;
+    });
+
+    isComplete ? document.stage = "review" : document.stage = "in-progress";
 
     await document.save();
 

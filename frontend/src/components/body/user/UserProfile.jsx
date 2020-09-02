@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import Axios from 'axios';
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
 
 const url = process.env.REACT_APP_URL;
 
 export default function UserProfile(props) {
 
-  const [user, setUser] = useState({});
-
   let {id} = useParams();
-
-  // useEffect(() => {
-  //   Axios.get(`${url}/api/users/profile/${id}`)
-  //     .then(res => {
-  //       console.log(res.data.user);
-  //     })
-  //     .catch(e => console.log(e))
-  // }, [props.users])
 
   return (
     <div>
@@ -26,8 +15,12 @@ export default function UserProfile(props) {
       <div>Email: {props.user.email}</div>
       <div>
         Documents:
-        {props.user.documents.map((doc) => {
-          return <li>{doc.title}</li>;
+        {props.user.documents.map((doc, i) => {
+          return (
+            <Link to={`/documents/edit/${doc._id}`}>
+              <li key={i}>{doc.title}</li>
+            </Link>
+          );
         })}
       </div>
     </div>
