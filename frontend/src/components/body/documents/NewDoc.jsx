@@ -28,7 +28,7 @@ export default function NewDoc(props) {
       .then(res => {
         console.log(res.data.message);
       })
-      .catch(err => alert(err.data.message));
+      .catch(err => alert(err));
   }
 
   
@@ -117,7 +117,7 @@ export default function NewDoc(props) {
             </Form.Control>
           </Form.Group>
         </Form.Row>
-        <Button type="submit" className="text-right">
+        <Button type="submit" className="text-right" variant="warning">
           Create document
         </Button>
       </Form>

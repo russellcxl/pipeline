@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Axios from 'axios';
+
+const url = process.env.REACT_APP_URL;
 
 export default function UserProfile(props) {
 
-  console.log(props.user);
+  const [user, setUser] = useState({});
+
+  let {id} = useParams();
+
+  // useEffect(() => {
+  //   Axios.get(`${url}/api/users/profile/${id}`)
+  //     .then(res => {
+  //       console.log(res.data.user);
+  //     })
+  //     .catch(e => console.log(e))
+  // }, [props.users])
 
   return (
     <div>

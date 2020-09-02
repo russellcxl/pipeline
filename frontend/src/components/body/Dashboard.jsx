@@ -47,8 +47,8 @@ export default function Dashboard(props) {
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title style={{ fontSize: "1rem" }}>
-                        <Link to={`/documents/edit/${d._id}`}>{d.title}</Link>
+                      <Card.Title style={{ fontSize: "20px", marginBottom: '30px' }}>
+                        <Link to={`/documents/update/${d._id}`}>{d.title}</Link>
                       </Card.Title>
                       {d.requiredInputs.map((x) =>
                         isDone(x.user.name, x.isDone)
@@ -74,8 +74,8 @@ export default function Dashboard(props) {
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title style={{ fontSize: "1rem" }}>
-                        <Link to={`/documents/edit/${d._id}`}>{d.title}</Link>
+                      <Card.Title style={{ fontSize: "20px", marginBottom: '30px' }}>
+                        <Link to={`/documents/update/${d._id}`}>{d.title}</Link>
                       </Card.Title>
                       {d.requiredApprovals.map((x) =>
                         isDone(x.user.name, x.isApproved)
@@ -98,8 +98,8 @@ export default function Dashboard(props) {
                 <Row key={i} className="mb-3">
                   <Card className="text-center document-card">
                     <Card.Body>
-                      <Card.Title style={{ fontSize: "1rem" }}>
-                        <Link to={`/documents/edit/${d._id}`}>{d.title}</Link>
+                      <Card.Title style={{ fontSize: "20px", marginBottom: '30px' }}>
+                        <Link to={`/documents/update/${d._id}`}>{d.title}</Link>
                       </Card.Title>
                       {d.requiredApprovals.map((x) =>
                         isDone(x.user.name, x.isApproved)
@@ -155,11 +155,19 @@ function getDaysLeft(document) {
   daysLeft <= 3 ? variant = "danger"
     : daysLeft <= 7 ? variant = "warning"
     : variant = "secondary";
+
+  let dueIn = `${daysLeft} day(s) left`;
+  let dueToday = `Due today`;
+  let overdue = `${daysLeft} day(s) overdue`;
+
   return (
     <ListGroup className="list-group-flush">
       <ListGroupItem>
         <Badge variant={variant} className="mr-2">
-          {daysLeft} day(s) left
+          {daysLeft > 0 ? dueIn
+            : daysLeft == 0 ? dueToday
+            : overdue
+          }
         </Badge>
       </ListGroupItem>
     </ListGroup>

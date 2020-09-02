@@ -14,6 +14,7 @@ import NewDoc from "./body/documents/NewDoc";
 import ViewDoc from "./body/documents/ViewDoc";
 import Directory from "./body/Directory";
 import EditDoc from './body/documents/EditDoc';
+import QuickEditDoc from './body/documents/QuickEditDoc';
 
 export default function Routes(props) {
   return (
@@ -30,13 +31,13 @@ export default function Routes(props) {
         </Route>
 
         <Route path="/directory">
-          <Directory />
+          {props.documents.length > 0 ? <Directory {...props} /> : <Spinner />}
         </Route>
 
         {/* DOCUMENTS */}
 
         <Route path="/documents/new">
-          <NewDoc {...props} />
+          {props.user ? <NewDoc {...props} /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/documents/view/:id">
@@ -44,7 +45,11 @@ export default function Routes(props) {
         </Route>
 
         <Route path="/documents/edit/:id">
-          {props.documents.length > 0 ? (<EditDoc {...props} />) : (<Spinner/>)}
+          {props.documents.length > 0 ? <EditDoc {...props} /> : <Spinner />}
+        </Route>
+
+        <Route path="/documents/update/:id">
+          {props.documents.length > 0 && props.user ? <QuickEditDoc {...props} /> : <Spinner />}
         </Route>
 
         {/* AUTH */}

@@ -104,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: "100vh",
     overflow: "auto",
+    overflowY: "scroll",
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -253,6 +254,7 @@ export default function MainFrame(props) {
               style={{ height: "9rem" }}
               onClick={handleDrawerClose}
               alt=""
+              className="logo-turn"
             ></img>
           )}
         </div>
