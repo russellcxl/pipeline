@@ -25,7 +25,7 @@ h1 {
 .overlapping-arrows .col-md-4 {
   display: block;
   float: left;
-  height: 7rem;
+  height: 8.7rem;
   background: #ffc107;
   text-align: center;
   position: relative;
@@ -39,7 +39,7 @@ h1 {
 .overlapping-arrows .col-md-4 h5 {
   margin-top: 50px;
   margin-left: 80px;
-  font-size: 1.5rem;
+  font-size: 2rem !important;
   color: #343a40;
 }
 
@@ -78,7 +78,7 @@ h1 {
 
 .document-card-container {
 	padding-left: 2rem;
-	margin-left: 1.5rem !important;
+	margin-left: 5.5rem !important;
 }
 
 .document-card-container .col-md-4 {
