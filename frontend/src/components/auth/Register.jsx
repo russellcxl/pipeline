@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ------------------------------------ classes ------------------------------------ //
 
-export default function Login(props) {
+function Register(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -87,7 +87,10 @@ export default function Login(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => props.handleRegister({ name, email, password })}
+            onClick={() => {
+              props.handleRegister({ name, email, password });
+              props.history.push("/")
+            }}
           >
             Register
           </Button>
@@ -99,3 +102,5 @@ export default function Login(props) {
     </Container>
   );
 }
+
+export default withRouter(Register);

@@ -131,8 +131,9 @@ export default function MainFrame(props) {
 
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const documents = useDocument();
-  const users = useUsers();
+  const [change, setChange] = useState(false); //so that the documents and users effects can run again
+  const documents = useDocument(change);
+  const users = useUsers(change);
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -207,7 +208,7 @@ export default function MainFrame(props) {
   );
 
   return (
-    <div className={classes.root} >
+    <div className={classes.root}>
       {/* top navbar */}
       <AppBar
         position="absolute"
@@ -280,9 +281,15 @@ export default function MainFrame(props) {
       {/* main body */}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container} >
+        <Container maxWidth="lg" className={classes.container}>
           {/* router for rendering the main body content */}
-          <AppRoutes {...props} documents={documents} users={users} />
+          <AppRoutes
+            {...props}
+            documents={documents}
+            users={users}
+            setChange={setChange}
+            change={change}
+          />
         </Container>
       </main>
     </div>
@@ -291,7 +298,7 @@ export default function MainFrame(props) {
 
 // ------------------------------------ get all documents ------------------------------------ //
 
-function useDocument() {
+function useDocument(change) {
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
@@ -301,14 +308,14 @@ function useDocument() {
         setDocuments(res.data.documents);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [change]);
 
   return documents;
 }
 
 // ------------------------------------ get all users ------------------------------------ //
 
-function useUsers() {
+function useUsers(change) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -318,7 +325,7 @@ function useUsers() {
         setUsers(res.data.users);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [change]);
 
   return users;
 }

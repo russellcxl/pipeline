@@ -45,6 +45,7 @@ function InputDoc(props) {
     Axios.post(`${url}/api/documents/input/${id}/user/${user._id}`, {...data, history})
       .then((res) => {
         console.log(res.data.message);
+        props.setChange(!props.change);
         props.history.push("/");
       })
       .catch((e) => console.log(e));
@@ -64,7 +65,7 @@ function InputDoc(props) {
       : (
         <div>
           <h1 className="text-center mb-5">
-            DOCUMENT: {document.title}
+            {document.title}
           </h1>
 
           <Row>
