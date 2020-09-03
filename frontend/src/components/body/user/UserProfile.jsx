@@ -9,8 +9,7 @@ export default function UserProfile(props) {
 
   return (
     <div>
-      <h1>USER PROFILE</h1>
-      <div>Name: {props.user.name}</div>
+      <h1>{props.user.name.toUpperCase()}</h1>
       <div>ID: {props.user._id}</div>
       <div>Email: {props.user.email}</div>
       <div>

@@ -5,7 +5,6 @@ import { decode } from "jsonwebtoken";
 import MainFrame from "./components/MainFrame";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
-import { Alert } from "react-bootstrap";
 
 // ------------------------------------ config ------------------------------------ //
 
@@ -52,7 +51,7 @@ function App() {
 function useHandleAuth() {
 
   const [isAuth, setAuth] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   
   
   async function handleRegister(details) {
@@ -72,7 +71,6 @@ function useHandleAuth() {
       let res = await axios.post(`${url}/api/auth/login`, details);
       localStorage.setItem("token", res.data.token);
       setAuth(true);
-
     }
     catch (e) {
       console.log(e);
@@ -81,8 +79,7 @@ function useHandleAuth() {
   }
   
   
-  async function handleLogout(e) {
-    console.log("LOGGING OUT");
+  function handleLogout(e) {
     e.preventDefault();
     setAuth(false);
     setUser(null);
@@ -101,6 +98,7 @@ function useHandleAuth() {
       setAuth(true);
     } catch (error) {
       console.log(error);
+      setUser(null);
     }
   }
   

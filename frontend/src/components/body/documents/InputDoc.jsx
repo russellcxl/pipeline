@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
-import { useParams, Redirect } from "react-router-dom";
+import { useParams, Redirect, withRouter } from "react-router-dom";
 import Spinner from '../../Spinner';
+import moment from "moment";
 
 // ------------------------------------ config ------------------------------------ //
 
@@ -14,7 +15,7 @@ const url = process.env.REACT_APP_URL;
 // ------------------------------------ component ------------------------------------ //
 
 
-export default function InputDoc(props) {
+function InputDoc(props) {
 
   // get document id, document info, current user info
   let {id} = useParams();
@@ -22,30 +23,44 @@ export default function InputDoc(props) {
   let user = props.user;
 
   // isAllowed checks if current user is allowed to make changes to the document
-  const [isAllowed, setAllowed] = useState(true);
+  const [isAllowed, setAllowed] = useState(false);
+  const [history, setHistory] = useState([]);
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      text: document.text,
-      history: document.history
+      text: document.text
     },
   });
 
   const onSubmit = (data) => {
-    Axios.post(`${url}/api/documents/input/${id}/user/${user._id}`, data)
-      .then((res) => console.log(res.data.message))
+
+    if (document.text !== data.text) {  
+      let newEdit = {
+        user: user._id,
+        before: document.text,
+        after: data.text
+      };
+      history.push(newEdit);
+    }
+
+    Axios.post(`${url}/api/documents/input/${id}/user/${user._id}`, {...data, history})
+      .then((res) => {
+        console.log(res.data.message);
+        props.history.push("/");
+      })
       .catch((e) => console.log(e));
   }
 
   useEffect(() => {
-    if (document.accessibleBy.includes(user._id)) {
+    if (document.requiredInputs.map(x => x.user._id).includes(user._id)) {
       setAllowed(true);
+      setHistory(document.history);
     }
   }, [props.document, props.user])
   
   
   return (
     <React.Fragment>
-      {!isAllowed ? (<Redirect to="/" />)
+      {!isAllowed ? (<Spinner />)
       : (
         <div>
           <h1 className="text-center mb-5">
@@ -54,10 +69,12 @@ export default function InputDoc(props) {
 
           <Row>
             {/* edit history */}
-            <Col md={3}>Edit history here</Col>
+            <Col md={4} style={{paddingRight: '150px'}}>
+              {timeline(history)}
+            </Col>
 
             {/* content */}
-            <Col md={8}>
+            <Col md={7}>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                   <Form.Control
@@ -113,3 +130,27 @@ export default function InputDoc(props) {
     </React.Fragment>
   );
 };
+
+// ------------------------------------  ------------------------------------ //
+
+function timeline(history) {
+
+  return (
+    <div class="timeline">
+      {history.map((edit, i) => {
+        return (
+          <div class="container right" key={i}>
+            <div class="content ml-2">
+              <p style={{marginBottom: '0'}}>{edit.user.name}</p>
+              <p><em>{moment(edit.editedOn).format("MMM Do YYYY, h:mm a")}</em></p>
+            </div>
+          </div>
+        );
+      })}
+      
+    </div>
+  );
+}
+
+
+export default withRouter(InputDoc);

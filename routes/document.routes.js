@@ -53,6 +53,13 @@ router.get("/", async (req, res) => {
           model: "User"
         }
       })
+      .populate({
+        path : "history",
+        populate: ({
+          path: "user",
+          model: "User"
+        })
+      })
       .sort({"deadline": 1});
 
     res.status(200).json({
@@ -98,7 +105,7 @@ router.get("/show/:id", async (req, res) => {
 });
 
 
-// ------------------------------------ edit ------------------------------------ //
+// ------------------------------------ edit as creator ------------------------------------ //
 
 
 router.post("/edit/:id", async (req, res) => {
@@ -117,10 +124,10 @@ router.post("/edit/:id", async (req, res) => {
 });
 
 
-// ------------------------------------ edit as contributor/approver ------------------------------------ //
+// ------------------------------------ edit as contributor (input) ------------------------------------ //
 
 
-// for updating text, isDone, isApproved, history
+// for updating text, isDone, history
 router.post("/input/:id/user/:userid", async (req, res) => {
   try {
     let userId = req.params.userid;
@@ -154,6 +161,63 @@ router.post("/input/:id/user/:userid", async (req, res) => {
     });
   }
 })
+
+
+// ------------------------------------ edit as reviewer (approve) ------------------------------------ //
+
+
+// for updating text, isApproved, history
+router.post("/review/:id/user/:userid", async (req, res) => {
+  try {
+    let userId = req.params.userid;
+    let document = await Document.findById(req.params.id);
+    let { text, history, isApproved } = req.body;
+    let isComplete = true; //checks if all required reviews have been made
+    document.text = text;
+    document.history = history;
+
+    document.requiredApprovals.forEach((input) => {
+      if (input.user == userId) {
+        input.isApproved = isApproved;
+      }
+    });
+
+    document.requiredApprovals.forEach((input) => {
+      if (input.isApproved == 0) isComplete = false;
+    });
+
+    isComplete ? document.stage = "approved" : document.stage = "review";
+
+    await document.save();
+
+    res.status(200).json({
+      message: "DOCUMENT succesfully updated!",
+      document,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to update DOCUMENT",
+    });
+  }
+})
+
+
+// ------------------------------------ edit ------------------------------------ //
+
+
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    await Document.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      message: "DOCUMENT removed from database",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to remove DOCUMENT",
+    });
+  }
+});
 
 
 // ------------------------------------ export ------------------------------------ //

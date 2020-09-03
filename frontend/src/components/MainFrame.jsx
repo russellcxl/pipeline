@@ -127,6 +127,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MainFrame(props) {
 
+  console.log(props.user)
+
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const documents = useDocument();

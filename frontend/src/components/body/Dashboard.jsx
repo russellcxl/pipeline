@@ -146,7 +146,7 @@ function countDocuments(stage, docs) {
 function getDaysLeft(document) {
   let daysLeft = moment().diff(document.deadline, 'days') * (-1);
   let variant;
-  daysLeft <= 3 ? variant = "danger"
+  daysLeft <= 0 ? variant = "danger"
     : daysLeft <= 7 ? variant = "warning"
     : variant = "secondary";
 

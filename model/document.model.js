@@ -11,7 +11,7 @@ const DocumentSchema = new mongoose.Schema(
 
     deadline: {
       type: Date,
-      default: "2049-01-01T18:25:43.511Z",
+      default: "2021-02-02T18:25:43.511Z",
     },
 
     createdBy: {

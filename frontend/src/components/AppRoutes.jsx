@@ -11,7 +11,6 @@ import UserProfile from "./body/user/UserProfile";
 import Dashboard from "./body/Dashboard";
 import DataTable from "./body/DataTable";
 import NewDoc from "./body/documents/NewDoc";
-import ViewDoc from "./body/documents/ViewDoc";
 import Directory from "./body/Directory";
 import EditDoc from './body/documents/EditDoc';
 import InputDoc from './body/documents/InputDoc';
@@ -37,11 +36,7 @@ export default function Routes(props) {
         {/* DOCUMENTS */}
 
         <Route path="/documents/new">
-          {props.user ? <NewDoc {...props} /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/documents/view/:id">
-          <ViewDoc {...props} />
+          {props.user ? <NewDoc {...props} /> : <Redirect to="/login"/>}
         </Route>
 
         <Route path="/documents/edit/:id">

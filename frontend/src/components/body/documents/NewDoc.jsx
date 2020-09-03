@@ -3,7 +3,7 @@ import { Form, Button, Col } from "react-bootstrap";
 import Axios from "axios";
 import dotenv from "dotenv";
 import { useForm } from "react-hook-form";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 
 // ------------------------------------ config  ------------------------------------ //
@@ -16,7 +16,7 @@ let url = process.env.REACT_APP_URL;
 
 
 // users props for all users, user for me
-export default function NewDoc(props) {
+function NewDoc(props) {
   
   const { register, handleSubmit } = useForm();
 
@@ -27,6 +27,7 @@ export default function NewDoc(props) {
     Axios.post(`${url}/api/documents/${props.user._id}`, data)
       .then(res => {
         console.log(res.data.message);
+        props.history.push("/");
       })
       .catch(err => alert(err));
   }
@@ -117,10 +118,12 @@ export default function NewDoc(props) {
             </Form.Control>
           </Form.Group>
         </Form.Row>
-        <Button type="submit" className="text-right" variant="warning">
+        <Button type="submit" className="text-right" variant="dark">
           Create document
         </Button>
       </Form>
     </div>
   );
 }
+
+export default withRouter(NewDoc);

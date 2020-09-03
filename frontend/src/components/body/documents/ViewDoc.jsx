@@ -11,5 +11,4 @@ export default function ViewDoc(props) {
       <div>ID: {id}</div>
     </div>
   );
-
 };

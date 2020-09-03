@@ -3,7 +3,6 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
 import { useParams, Redirect } from "react-router-dom";
-import Spinner from '../../Spinner';
 
 // ------------------------------------ config ------------------------------------ //
 
@@ -73,7 +72,7 @@ export default function ReviewDoc(props) {
                     <input
                       type="radio"
                       id="yes"
-                      name="isDone"
+                      name="isApproved"
                       value="1"
                       class="btn-switch__radio btn-switch__radio_yes"
                       ref={register}
@@ -81,7 +80,7 @@ export default function ReviewDoc(props) {
                     <input
                       type="radio"
                       id="no"
-                      name="isDone"
+                      name="isApproved"
                       checked
                       value="0"
                       class="btn-switch__radio btn-switch__radio_no"
@@ -97,7 +96,7 @@ export default function ReviewDoc(props) {
                       for="no"
                       class="btn-switch__label btn-switch__label_no"
                     >
-                      <span class="btn-switch__txt">Working on it</span>
+                      <span class="btn-switch__txt">Needs work</span>
                     </label>
                   </p>
                 </Form.Group>
