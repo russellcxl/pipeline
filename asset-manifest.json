@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/pipeline/static/css/main.27f64dcf.chunk.css",
+    "main.js": "/pipeline/static/js/main.098ae268.chunk.js",
+    "main.js.map": "/pipeline/static/js/main.098ae268.chunk.js.map",
+    "runtime-main.js": "/pipeline/static/js/runtime-main.bca7d6d7.js",
+    "runtime-main.js.map": "/pipeline/static/js/runtime-main.bca7d6d7.js.map",
+    "static/css/2.11829350.chunk.css": "/pipeline/static/css/2.11829350.chunk.css",
+    "static/js/2.aa984075.chunk.js": "/pipeline/static/js/2.aa984075.chunk.js",
+    "static/js/2.aa984075.chunk.js.map": "/pipeline/static/js/2.aa984075.chunk.js.map",
+    "index.html": "/pipeline/index.html",
+    "precache-manifest.dbae3a1ad764c77668398bcffef0f6aa.js": "/pipeline/precache-manifest.dbae3a1ad764c77668398bcffef0f6aa.js",
+    "service-worker.js": "/pipeline/service-worker.js",
+    "static/css/2.11829350.chunk.css.map": "/pipeline/static/css/2.11829350.chunk.css.map",
+    "static/css/main.27f64dcf.chunk.css.map": "/pipeline/static/css/main.27f64dcf.chunk.css.map",
+    "static/js/2.aa984075.chunk.js.LICENSE.txt": "/pipeline/static/js/2.aa984075.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bca7d6d7.js",
+    "static/css/2.11829350.chunk.css",
+    "static/js/2.aa984075.chunk.js",
+    "static/css/main.27f64dcf.chunk.css",
+    "static/js/main.098ae268.chunk.js"
+  ]
+}
