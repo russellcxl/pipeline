@@ -1,6 +1,6 @@
 # DOCUMENT CONTROL APP
 
-### To-do:
+### Features:
 - edit document backend
 - edit document authentication
 - delete document (only allow if it belongs to user)
