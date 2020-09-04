@@ -1,16 +1,21 @@
-# DOCUMENT CONTROL APP
+# PIPELINE
+
+## A rudimentary document control system
 
 ### Features:
-- edit document backend
-- edit document authentication
-- delete document (only allow if it belongs to user)
-- user directory
-- user profile
-- refactor MainFrame component
-- suspense (optional)
+- multi-stage document control
+- manage user accessibilty according to stages
+- document edit history for tracking purposes
 
-### Compromises:
-- editing documents will cause isDone, isApproved to reset. Cumbersome to track those attributes when you're setting requiredInput and requiredApprovals
+### Main technologies:
+- React
+- Nodejs / Express
+- MongoDB
+- JSON Web Token
+- Material UI
+
+### To include:
+- email sender to remind users to complete/review/approve a document
 
 ### Ref:
 - [Jonathan Levaillant](https://codepen.io/jlwebart) for the elegant  radio button
