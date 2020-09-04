@@ -30,7 +30,6 @@ import {
   LibraryBooks as LibraryIcon,
 } from "@material-ui/icons";
 import logo from '../images/logo.png';
-import logoPure from '../images/logo-pure.png';
 
 
 // ------------------------------------ config ------------------------------------ //

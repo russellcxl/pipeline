@@ -19,6 +19,8 @@ let url = process.env.REACT_APP_URL;
 
 export default function Dashboard(props) {
 
+  console.log(url)
+
   const documents = useGetDocuments();
 
   return (
@@ -199,8 +201,3 @@ function isDone(name, status) {
     </div>
   );
 }
-
-
-                      
-
-

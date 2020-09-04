@@ -22,7 +22,7 @@ export default function Routes(props) {
         {/* SIDE NAVBAR */}
 
         <Route path="/" exact>
-          <Dashboard {...props} />
+          {props.documents.length > 0 ? <Dashboard {...props} /> : <Spinner />}
         </Route>
 
         <Route path="/library">
@@ -36,7 +36,7 @@ export default function Routes(props) {
         {/* DOCUMENTS */}
 
         <Route path="/documents/new">
-          {props.user ? <NewDoc {...props} /> : <Redirect to="/login"/>}
+          {props.user ? <NewDoc {...props} /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/documents/edit/:id">
@@ -44,7 +44,11 @@ export default function Routes(props) {
         </Route>
 
         <Route path="/documents/input/:id">
-          {props.documents.length > 0 && props.user ? <InputDoc {...props} /> : <Spinner />}
+          {props.documents.length > 0 && props.user ? (
+            <InputDoc {...props} />
+          ) : (
+            <Spinner />
+          )}
         </Route>
 
         {/* AUTH */}

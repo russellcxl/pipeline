@@ -11,7 +11,6 @@ h1 {
 /* .logo-turn {
   transition: 1s linear;
 }
-
 .logo-turn:hover {
   transform: rotate(180deg);
 } */
@@ -39,7 +38,7 @@ h1 {
 .overlapping-arrows .col-md-4 h5 {
   margin-top: 50px;
   margin-left: 80px;
-  font-size: 2rem !important;
+  font-size: 1.8rem !important;
   color: #343a40;
 }
 
@@ -99,7 +98,7 @@ h1 {
 }
 
 .document-card:hover {
-  height: 15rem !important;
+  height: 17rem !important;
   transition: 0.3s ease-in-out;
 }
 
@@ -279,7 +278,6 @@ body {
   padding: 10px 40px;
   position: relative;
   background-color: inherit;
-  /* width: 50%; */
 }
 
 /* The circles on the timeline */
